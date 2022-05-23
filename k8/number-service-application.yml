@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: number-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: number-service
+  template:
+    metadata:
+      labels:
+        app: number-service
+    spec:
+      containers:
+        - name: number-service
+          image: number-service:latest
+          imagePullPolicy: Never

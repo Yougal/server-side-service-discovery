@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    gateway:
+      httpclient:
+        wiretap: true
+      httpserver:
+        wiretap: true
+      discovery:
+        locator:
+           enabled: true
+      routes:
+        - id: number-api
+          uri: lb://number-service
+          predicates:
+          - Path=/api/number-service/**
+          filters:
+          - RewritePath=/api/number-service/(?<segment>.*), /$\{segment}
+        - id: math-api
+          uri: lb://math-service
+          predicates:
+          - Path=/api/math-service/**
+          filters:
+          - RewritePath=/api/math-service/(?<segment>.*), /$\{segment}
+logging:
+  level:
+    reactor:
+      netty: INFO
+    org:
+      springframework:
+        cloud:
+          gateway: TRACE

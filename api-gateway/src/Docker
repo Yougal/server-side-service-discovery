@@ -1,0 +1,6 @@
+FROM adoptopenjdk/openjdk11
+WORKDIR /opt
+ENV PORT 8080
+EXPOSE 8080
+COPY target/math-service-0.0.1-SNAPSHOT.jar /opt/app.jar
+CMD ["java","-jar", "app.jar"]
